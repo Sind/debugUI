@@ -2,7 +2,6 @@
 
 function love.load()
 	require "debugUI"
-	-- ft = require "frametable"
 	test = {super = 3}
 	ui = debugUI.new(
 	{

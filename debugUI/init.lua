@@ -27,7 +27,7 @@ end
 
 love.filesystem.getDirectoryItems( "debugUI/objects", function(file)
 	local objectName = file:sub(1,file:len()-4)
-	debugUI[objectName] = dofile("debugUI/objects/" .. file);
+	debugUI[objectName] = love.filesystem.load("debugUI/objects/" .. file)();
 end )
 
 
