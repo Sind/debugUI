@@ -7,8 +7,13 @@ function love.load()
 	{
 		test1 = {"slider",0,100},
 		test2 = {"slider", 0, 50},
-		["test.super"] = {"slider", 0, 100}
+		["test.super"] = {"slider", 0, 100},
+		test3 = {"slider",0,100},
+		test4 = {"slider", 0, 50},
+		test5 = {"slider",0,100},
+		test6 = {"slider", 0, 50}
 	})
+	b = debugUI.new({abc = {"slider",0,100}})
 end
 
 function love.update(dt)
@@ -21,10 +26,6 @@ function love.draw()
 	debugUI.draw()
 end
 
-function love.keypressed()
-	love.event.push("quit")
-end
-
 function love.mousepressed(x, y, button)
 	debugUI.mousepressed(x, y, button)
 end
@@ -34,6 +35,7 @@ function love.mousereleased(x, y, button)
 end
 
 function love.keypressed(key, unicode)
+	if key == "escape" then love.event.push("quit") end
 	debugUI.keypressed(key, unicode)
 end
 

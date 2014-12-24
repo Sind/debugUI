@@ -72,8 +72,14 @@ debugUI.new = function(t)
 	mainPanel:SetPos(0,20)
 
 	local position = 10
-	local allowedWidth = #horizontal > 0 and 200 or 380
-	
+	local allowedwidth = (#horizontal > 0) and 200 or 380
+	if #page == 0 and totalwidth < allowedwidth then
+		window:SetWidth(400-(allowedwidth-totalwidth))
+		mainPanel:SetWidth(400-(allowedwidth-totalwidth))
+	else
+
+	end
+
 	for i,debugObject in ipairs(vertical) do
 		local panel = debugObject:setup()
 		panel:SetParent(mainPanel)
@@ -95,6 +101,11 @@ function debugUI.mousereleased(x, y, button)
 end
 
 function debugUI.keypressed(key, unicode)
+	if key == "f12" then
+		for i,v in ipairs(debugUI.windows) do
+
+		end
+	end
 	loveframes.keypressed(key, unicode)
 end
 
