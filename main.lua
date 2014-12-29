@@ -5,7 +5,7 @@ function love.load()
 	test = {super = 3}
 	ui = debugUI.new(
 	{
-		test1 = {"slider",0,100},
+		test1 = {"slider",0,9999.99},
 		test2 = {"slider", 0, 50},
 		["test.super"] = {"slider", 0, 100},
 		test3 = {"slider",0,100},

@@ -73,18 +73,28 @@ debugUI.new = function(t)
 
 	local position = 10
 	local allowedwidth = (#horizontal > 0) and 200 or 380
-	if #page == 0 and totalwidth < allowedwidth then
+
+	verticalsList = nil
+	if #page == 0 and totalwidth <= allowedwidth then
 		window:SetWidth(400-(allowedwidth-totalwidth))
 		mainPanel:SetWidth(400-(allowedwidth-totalwidth))
 	else
+		verticalsList = loveframes.Create("list",mainPanel)
+		verticalsList:SetDisplayType("horizontal")
+		verticalsList:SetSize(allowedwidth,165)
+		verticalsList:SetPos(10,10)
 
 	end
 
 	for i,debugObject in ipairs(vertical) do
 		local panel = debugObject:setup()
-		panel:SetParent(mainPanel)
-		panel:SetPos(position,10)
-		position = position + debugObject.width
+		if not verticalsList then
+			panel:SetParent(mainPanel)
+			panel:SetPos(position,10)
+			position = position + debugObject.width
+		else
+			verticalsList:AddItem(panel)
+		end
 	end
 
 	table.insert(debugUI.windows,mainTable)
