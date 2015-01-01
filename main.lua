@@ -5,15 +5,15 @@ function love.load()
 	test = {super = 3}
 	ui = debugUI.new(
 	{
-		test1 = {"slider",0,9999.99},
-		test2 = {"slider", 0, 50},
-		["test.super"] = {"slider", 0, 100},
-		test3 = {"slider",0,100},
-		test4 = {"slider", 0, 50},
-		test5 = {"slider",0,100},
-		test6 = {"slider", 0, 50}
+		{var = "test1", type = "slider", min = 0, max = 9999.99},
+		{var = "test2", type = "slider", min = 0, max = 50},
+		{var = "test3", type = "slider", min = 0, max = 100},
+		{var = "test.super", type = "slider", min = 0, max = 100},
+		{var = "test4", type = "slider", min = 0, max = 50},
+		{var = "test5", type = "slider", min = 0, max = 100},
+		{var = "test6", type = "slider", min = 0, max = 50}
 	})
-	b = debugUI.new({abc = {"slider",0,100}})
+	b = debugUI.new({{var = "abc", type = "slider",min = 0, max =100}})
 end
 
 function love.update(dt)

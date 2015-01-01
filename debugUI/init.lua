@@ -1,9 +1,11 @@
-loveframes = require "loveframes"
+
 
 -- local slider =
 
 --initialize EVERYTHING
 debugUI = {windows = {}}
+
+debugUI.loveframes = require "loveframes"
 
 debugUI.getfield = function(f)
 	local v = _G    -- start with the table of globals
@@ -32,17 +34,17 @@ end )
 
 
 debugUI.update = function(dt)
-	loveframes.update(dt)
+	debugUI.loveframes.update(dt)
 	for i,v in ipairs(debugUI.windows) do
 		v:update()
 	end
 end
 debugUI.draw = function()
-	loveframes.draw()
+	debugUI.loveframes.draw()
 end
 
 debugUI.new = function(t)
-	local window = loveframes.Create("frame")
+	local window = debugUI.loveframes.Create("frame")
 	window:SetPos(0,0)
 	window:SetSize(400,200)
 
@@ -52,8 +54,8 @@ debugUI.new = function(t)
 	local vertical = {}
 	local horizontal = {}
 	local page = {}
-	for k,v in pairs(t) do
-		local debugObject = debugUI[v[1]](k,v)
+	for i,v in ipairs(t) do
+		local debugObject = debugUI[v.type](v)
 		table.insert(mainTable,debugObject)
 		if debugObject.type == "vertical" then
 			table.insert(vertical,debugObject)
@@ -66,7 +68,7 @@ debugUI.new = function(t)
 	if #page > 0 then
 	--TODO: fix for pages
 	else
-		mainPanel = loveframes.Create("panel",window)
+		mainPanel = debugUI.loveframes.Create("panel",window)
 	end
 	mainPanel:SetSize(400,180)
 	mainPanel:SetPos(0,20)
@@ -79,7 +81,7 @@ debugUI.new = function(t)
 		window:SetWidth(400-(allowedwidth-totalwidth))
 		mainPanel:SetWidth(400-(allowedwidth-totalwidth))
 	else
-		verticalsList = loveframes.Create("list",mainPanel)
+		verticalsList = debugUI.loveframes.Create("list",mainPanel)
 		verticalsList:SetDisplayType("horizontal")
 		verticalsList:SetSize(allowedwidth,165)
 		verticalsList:SetPos(10,10)
@@ -103,11 +105,11 @@ end
 
 
 function debugUI.mousepressed(x, y, button)
-	loveframes.mousepressed(x, y, button)
+	debugUI.loveframes.mousepressed(x, y, button)
 end
 
 function debugUI.mousereleased(x, y, button)
-	loveframes.mousereleased(x, y, button)
+	debugUI.loveframes.mousereleased(x, y, button)
 end
 
 function debugUI.keypressed(key, unicode)
@@ -116,11 +118,9 @@ function debugUI.keypressed(key, unicode)
 
 		end
 	end
-	loveframes.keypressed(key, unicode)
+	debugUI.loveframes.keypressed(key, unicode)
 end
 
 function debugUI.keyreleased(key,unicode)
-	loveframes.keyreleased(key)
+	debugUI.loveframes.keyreleased(key)
 end
-
-return debugUI 
