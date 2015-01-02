@@ -29,7 +29,7 @@ slider.setup = function(self)
 	local panel = debugUI.loveframes.Create("panel")
 	panel:SetSize(self.width,150)
 	local name = debugUI.loveframes.Create("text",panel)
-	name:SetText(self.var)
+	name:SetText(self.name)
 	name:SetPos(2,2)
 	local slider = debugUI.loveframes.Create("slider", panel)
 	slider:SetSlideType("vertical")
@@ -46,7 +46,7 @@ slider.setup = function(self)
 	self.ui.name = name
 	self.ui.value = value
 	-- returns appropriate loveframes object
-	return self.ui.panel
+	return panel
 end
 
 return slider
