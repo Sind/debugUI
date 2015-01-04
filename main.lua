@@ -11,7 +11,8 @@ function love.load()
 		{var = "test.super", type = "slider", min = 0, max = 100},
 		{var = "test4", type = "slider", min = 0, max = 50},
 		{var = "test5", type = "slider", min = 0, max = 100},
-		{var = "test6", type = "slider", min = 0, max = 100}
+		{var = "test6", type = "checkbox"},
+		{var = "test7",name = "testno", type = "checkbox",val = true}
 	})
 	b = debugUI.new({{var = "abc", type = "slider",min = 0, max =100}})
 end

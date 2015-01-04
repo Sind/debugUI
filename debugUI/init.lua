@@ -60,6 +60,9 @@ debugUI.new = function(t)
 		if debugObject.type == "vertical" then
 			table.insert(vertical,debugObject)
 			totalwidth = totalwidth + debugObject.width
+		elseif debugObject.type == "horizontal" then
+			table.insert(horizontal,debugObject)
+			totalheight = totalheight + debugObject.height
 		end
 		--TODO; fix for horizontals and pages
 	end
@@ -85,7 +88,6 @@ debugUI.new = function(t)
 		verticalsList:SetDisplayType("horizontal")
 		verticalsList:SetSize(allowedwidth,165)
 		verticalsList:SetPos(10,10)
-
 	end
 
 	for i,debugObject in ipairs(vertical) do
@@ -99,6 +101,16 @@ debugUI.new = function(t)
 		end
 	end
 
+	position = 10
+	for i,debugObject in ipairs(horizontal) do
+		local panel = debugObject:setup()
+		if not horizontalsList then
+			panel:SetParent(mainPanel)
+			panel:SetPos(window:GetWidth()-180,position)
+			position = position + debugObject.height
+		else
+		end
+	end
 	table.insert(debugUI.windows,mainTable)
 	return window
 end
