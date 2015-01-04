@@ -31,7 +31,7 @@ checkbox.setup = function(self)
 	checkbox:SetChecked(self.val)
 	self.ui.panel = panel
 	self.ui.checkbox = checkbox
-	return panel
+	return self.ui.panel
 end
 
 return checkbox

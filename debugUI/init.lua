@@ -100,8 +100,16 @@ debugUI.new = function(t)
 			verticalsList:AddItem(panel)
 		end
 	end
-
+	local allowedheight = 165
 	position = 10
+	horizontalsList = nil
+	if totalheight > allowedheight then
+		horizontalsList = debugUI.loveframes.Create("list",mainPanel)
+		horizontalsList:SetDisplayType("vertical")
+		horizontalsList:SetSize(165,165)
+		horizontalsList:SetPos(window:GetWidth()-180,10)
+	end
+
 	for i,debugObject in ipairs(horizontal) do
 		local panel = debugObject:setup()
 		if not horizontalsList then
@@ -109,6 +117,7 @@ debugUI.new = function(t)
 			panel:SetPos(window:GetWidth()-180,position)
 			position = position + debugObject.height
 		else
+			horizontalsList:AddItem(panel)
 		end
 	end
 	table.insert(debugUI.windows,mainTable)

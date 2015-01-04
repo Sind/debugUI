@@ -11,8 +11,14 @@ function love.load()
 		{var = "test.super", type = "slider", min = 0, max = 100},
 		{var = "test4", type = "slider", min = 0, max = 50},
 		{var = "test5", type = "slider", min = 0, max = 100},
-		{var = "test6", type = "checkbox"},
-		{var = "test7",name = "testno", type = "checkbox",val = true}
+		{var = "test6", name = "print text", type = "checkbox"},
+		{var = "test7", name = "testno", type = "checkbox",val = true},
+		{var = "test8", name = "rw", type = "checkbox",val = true},
+		{var = "test9", name = "rw", type = "checkbox",val = false},
+		{var = "test0", name = "qwt", type = "checkbox",val = false},
+		{var = "testa", name = "qw", type = "checkbox",val = true},
+		-- {var = "testb",name = "testno", type = "checkbox",val = true},
+		-- {var = "testc",name = "testno", type = "checkbox",val = true}
 	})
 	b = debugUI.new({{var = "abc", type = "slider",min = 0, max =100}})
 end
@@ -23,7 +29,9 @@ function love.update(dt)
 end
 
 function love.draw()
-	love.graphics.print(test1 .. " * " .. test2 .. " = " .. test1 * test2,300,300)
+	if test6 then
+		love.graphics.print(test1 .. " * " .. test2 .. " = " .. test1 * test2,300,300)
+	end
 	debugUI.draw()
 end
 
