@@ -7,6 +7,8 @@ debugUI = {windows = {}}
 
 debugUI.loveframes = require "loveframes"
 
+debugUI.windowPosition = 0
+
 debugUI.getfield = function(f)
 	local v = _G    -- start with the table of globals
 	for w in string.gfind(f, "[%w_]+") do
@@ -45,26 +47,36 @@ end
 
 debugUI.new = function(t)
 	local window = debugUI.loveframes.Create("frame")
-	window:SetPos(0,0)
-	window:SetSize(400,200)
-
+	window:SetPos(debugUI.windowPosition,0)
+	window:SetSize(150,500)
+	debugUI.windowPosition = debugUI.windowPosition + 150
+	-- print(window.draw)
+	-- window.superdraw = window.draw
+	-- print(window.superdraw)
+	-- window.draw = function(self,...)
+	-- 	local r,g,b,a = love.graphics.getColor()
+	-- 	love.graphics.setColor(r,g,b,a/2)
+	-- 	self.superdraw(self,...)
+	-- 	love.graphics.setColor(r,g,b,a)
+	-- end
+	-- print(window.draw)
 	local mainTable = {update = function(self) for i,v in ipairs(self) do v:update() end end}
 	local totalwidth = 0
 	local totalheight = 0
-	local vertical = {}
+	-- local vertical = {}
 	local horizontal = {}
 	local page = {}
 	for i,v in ipairs(t) do
 		local debugObject = debugUI[v.type](v)
 		table.insert(mainTable,debugObject)
-		if debugObject.type == "vertical" then
-			table.insert(vertical,debugObject)
-			totalwidth = totalwidth + debugObject.width
-		elseif debugObject.type == "horizontal" then
+		-- if debugObject.type == "vertical" then
+		-- 	table.insert(vertical,debugObject)
+		-- 	totalwidth = totalwidth + debugObject.width
+		if debugObject.type == "horizontal" then
 			table.insert(horizontal,debugObject)
 			totalheight = totalheight + debugObject.height
 		end
-		--TODO; fix for horizontals and pages
+		--TODO; fix for pages
 	end
 
 	local mainPanel = nil
@@ -73,48 +85,54 @@ debugUI.new = function(t)
 	else
 		mainPanel = debugUI.loveframes.Create("panel",window)
 	end
-	mainPanel:SetSize(400,180)
-	mainPanel:SetPos(0,20)
+	mainPanel:SetSize(150,450)
+	mainPanel:SetPos(0,50)
 
-	local position = 10
-	local allowedwidth = (#horizontal > 0) and 200 or 380
+	-- local position = 10
+	-- local allowedwidth = (#horizontal > 0) and 200 or 380
 
-	verticalsList = nil
-	if #page == 0 and totalwidth <= allowedwidth then
-		window:SetWidth(400-(allowedwidth-totalwidth))
-		mainPanel:SetWidth(400-(allowedwidth-totalwidth))
-	else
-		verticalsList = debugUI.loveframes.Create("list",mainPanel)
-		verticalsList:SetDisplayType("horizontal")
-		verticalsList:SetSize(allowedwidth,165)
-		verticalsList:SetPos(10,10)
-	end
+	-- verticalsList = nil
+	-- if #page == 0 and totalwidth <= allowedwidth then
+	-- 	window:SetWidth(400-(allowedwidth-totalwidth))
+	-- 	mainPanel:SetWidth(400-(allowedwidth-totalwidth))
+	-- else
+	-- 	verticalsList = debugUI.loveframes.Create("list",mainPanel)
+	-- 	verticalsList:SetDisplayType("horizontal")
+	-- 	verticalsList:SetSize(allowedwidth,165)
+	-- 	verticalsList:SetPos(10,10)
+	-- end
 
-	for i,debugObject in ipairs(vertical) do
-		local panel = debugObject:setup()
-		if not verticalsList then
-			panel:SetParent(mainPanel)
-			panel:SetPos(position,10)
-			position = position + debugObject.width
-		else
-			verticalsList:AddItem(panel)
-		end
-	end
-	local allowedheight = 165
-	position = 10
+	-- for i,debugObject in ipairs(vertical) do
+	-- 	local panel = debugObject:setup()
+	-- 	if not verticalsList then
+	-- 		panel:SetParent(mainPanel)
+	-- 		panel:SetPos(position,10)
+	-- 		position = position + debugObject.width
+	-- 	else
+	-- 		verticalsList:AddItem(panel)
+	-- 	end
+	-- end
+	local allowedheight = 450
+	local position = 0
 	horizontalsList = nil
-	if totalheight > allowedheight then
+	if totalheight <= allowedheight then
+		window:SetHeight(window:GetHeight()-allowedheight+totalheight)
+		mainPanel:SetHeight(mainPanel:GetHeight()-allowedheight+totalheight)
+	else
+		window:SetWidth(165)
+		debugUI.windowPosition = debugUI.windowPosition + 15
+		mainPanel:SetWidth(165)
 		horizontalsList = debugUI.loveframes.Create("list",mainPanel)
 		horizontalsList:SetDisplayType("vertical")
-		horizontalsList:SetSize(165,165)
-		horizontalsList:SetPos(window:GetWidth()-180,10)
+		horizontalsList:SetSize(165,450)
+		horizontalsList:SetPos(0,0)
 	end
 
 	for i,debugObject in ipairs(horizontal) do
 		local panel = debugObject:setup()
 		if not horizontalsList then
 			panel:SetParent(mainPanel)
-			panel:SetPos(window:GetWidth()-180,position)
+			panel:SetPos(0,position)
 			position = position + debugObject.height
 		else
 			horizontalsList:AddItem(panel)
