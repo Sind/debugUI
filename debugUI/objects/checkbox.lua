@@ -1,7 +1,6 @@
 local checkbox = debugUI.loveframes.class('checkbox')
 
 checkbox.initialize = function(self,v)
-	self.type = "horizontal"
 	self.var = v.var
 	self.name = v.name or self.var
 	self.height = 30

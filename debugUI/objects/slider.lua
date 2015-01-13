@@ -1,7 +1,6 @@
 local slider = debugUI.loveframes.class('slider')
 
 slider.initialize =  function(self,v)
-	self.type = "horizontal"
 	self.var = v.var
 	self.name = v.name or self.var
 	self.height = 60-- math.max(love.graphics.getFont():getWidth(self.name)+4,60)

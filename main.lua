@@ -9,18 +9,22 @@ function love.load()
 		{var = "test1", type = "slider", min = 0, max = 9999.99},
 		{var = "test2", type = "slider", min = 0, max = 50},
 		{var = "test3", type = "slider", name = "extra", min = 0, max = 100},
-		{var = "test.super", type = "slider", min = 0, max = 100},
+		-- {var = "test.super", type = "slider", min = 0, max = 100},
 		{var = "test4", type = "slider", min = 0, max = 50},
 		{var = "test5", type = "slider", min = 0, max = 100},
 		{var = "test7", name = "testno", type = "checkbox",val = true},
 		{var = "test8", name = "rw", type = "checkbox",val = true},
 		{var = "test9", name = "rw", type = "checkbox",val = false},
 		{var = "test0", name = "qwt", type = "checkbox",val = false},
-		{var = "testa", name = "qw", type = "checkbox",val = true},
-		{var = "testb",name = "testno", type = "checkbox",val = true},
+		-- {var = "testa", name = "qw", type = "checkbox",val = true},
+		-- {var = "testb",name = "testno", type = "checkbox",val = true},
 		{var = "testc",name = "testno", type = "checkbox",val = true}
+	},300)
+	b = debugUI.new(
+	{
+		{var = "abc", type = "slider",min = 0, max =100},
+		{var = "bcd",type = "checkbox"}
 	})
-	b = debugUI.new({{var = "abc", type = "slider",min = 0, max =100}})
 end
 
 function love.update(dt)
