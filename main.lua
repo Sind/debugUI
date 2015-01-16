@@ -23,9 +23,11 @@ function love.load()
 	b = debugUI.new(
 	{
 		{var = "col", name = "background color", type="color"},
-		{var = "abc", type = "slider", min = 0, max =100},
-		{var = "bcd", type = "checkbox"}
+		-- {var = "abc", type = "slider", min = 0, max =100},
+		-- {var = "bcd", type = "checkbox"},
+		{var = "argh", type = "dropdown", vals = {"a","b","c"}}
 	})
+	col[2] = 100
 end
 
 function love.update(dt)
@@ -39,6 +41,8 @@ function love.draw()
 	if test6 then
 		love.graphics.print(test1 .. " * " .. test2 .. " = " .. test1 * test2,300,300)
 	end
+	love.graphics.print("argh: " .. (argh or "[nil]"),300,340)
+	
 	debugUI.draw()
 end
 
