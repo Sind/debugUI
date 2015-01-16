@@ -42,8 +42,10 @@ debugUI.draw = function()
 	debugUI.loveframes.draw()
 end
 
-debugUI.new = function(t,maxheight)
+debugUI.new = function(t, maxheight, wname)
 	
+	local tabbed = (type(t[1]) == "table")
+
 	local mainTable = {update = function(self) for i,v in ipairs(self) do v:update() end end}
 	local totalheight = 0
 	for i,v in ipairs(t) do
@@ -55,10 +57,19 @@ debugUI.new = function(t,maxheight)
 	maxheight = math.min(maxheight or 400,totalheight+45)
 
 	local window = debugUI.loveframes.Create("frame")
+	if wname then window:SetName(wname) end
 	window:SetPos(debugUI.windowPosition,0)
 	window:SetSize(165,maxheight)
+	window.xpos = debugUI.windowPosition
 	debugUI.windowPosition = debugUI.windowPosition + 165
-
+	window.OnClose = function(object)
+		if object:GetY() > love.graphics.getHeight() - 25 then
+			object:SetPos(object.xpos,0)
+		else
+			object:SetPos(object.xpos,love.graphics.getHeight()-20)
+		end
+		return false
+	end
 
 	local horizontalsList = debugUI.loveframes.Create("list",window)
 	horizontalsList:SetDisplayType("vertical")

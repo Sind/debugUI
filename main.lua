@@ -16,20 +16,23 @@ function love.load()
 		{var = "test8", name = "rw", type = "checkbox",val = true},
 		{var = "test9", name = "rw", type = "checkbox",val = false},
 		{var = "test0", name = "qwt", type = "checkbox",val = false},
-		-- {var = "testa", name = "qw", type = "checkbox",val = true},
-		-- {var = "testb",name = "testno", type = "checkbox",val = true},
-		{var = "testc",name = "testno", type = "checkbox",val = true}
-	},300)
+		{var = "testa", name = "qw", type = "checkbox",val = true},
+		{var = "testb", name = "testc", type = "checkbox",val = true},
+		{var = "testc", name = "testb", type = "checkbox",val = true}
+	},300,"Options")
 	b = debugUI.new(
 	{
-		{var = "abc", type = "slider",min = 0, max =100},
-		{var = "bcd",type = "checkbox"}
+		{var = "col", name = "background color", type="color"},
+		{var = "abc", type = "slider", min = 0, max =100},
+		{var = "bcd", type = "checkbox"}
 	})
 end
 
 function love.update(dt)
 	debugUI.update(dt)
 	test.super = (test.super + 50*dt)%100
+	love.graphics.setBackgroundColor(col)
+	col[1] = (col[1] + 100*dt)%256
 end
 
 function love.draw()
