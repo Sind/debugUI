@@ -54,7 +54,7 @@ debugUI.new = function(t, maxheight, wname)
 		totalheight = totalheight + debugObject.height
 	end
 
-	maxheight = math.min(maxheight or 400,totalheight+45)
+	maxheight = math.min(maxheight or 400,totalheight+45,love.graphics.getHeight())
 
 	local window = debugUI.loveframes.Create("frame")
 	if wname then window:SetName(wname) end
