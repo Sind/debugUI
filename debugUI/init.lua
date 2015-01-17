@@ -42,18 +42,39 @@ debugUI.draw = function()
 	debugUI.loveframes.draw()
 end
 
-debugUI.new = function(t, maxheight, wname)
-	
-	local tabbed = (type(t[1]) == "table")
+debugUI.new = function(t, maxheight, wname,...)
+	local args = {...}
 
+	local single = (type(t[1]) ~= "table")
+	local tabbed = (type(t[1]) == "table") and (type(t[1][1]) == "table")
 	local mainTable = {update = function(self) for i,v in ipairs(self) do v:update() end end}
 	local totalheight = 0
-	for i,v in ipairs(t) do
-		local debugObject = debugUI[v.type](v)
+	
+	if single then
+		local debugObject = debugUI[t.type](t)
 		table.insert(mainTable,debugObject)
-		totalheight = totalheight + debugObject.height
+		totalheight = debugObject.height
+	elseif tabbed then
+		subheights = {}
+		for j,u in ipairs(t) do
+			local subTable = {update = function(self) for i,v in ipairs(self) do v:update() end end}
+			local subheight = 0
+			for i,v in ipairs(u) do
+				local debugObject = debugUI[v.type](v)
+				table.insert(subTable,debugObject)
+				subheight = subheight + debugObject.height
+			end
+			mainTable[j] = subTable
+			subheights[j] = subheight
+		end
+		totalheight = math.max(unpack(subheights))
+	else
+		for i,v in ipairs(t) do
+			local debugObject = debugUI[v.type](v)
+			table.insert(mainTable,debugObject)
+			totalheight = totalheight + debugObject.height
+		end
 	end
-
 	maxheight = math.min(maxheight or 400,totalheight+45,love.graphics.getHeight())
 
 	local window = debugUI.loveframes.Create("frame")
@@ -71,14 +92,31 @@ debugUI.new = function(t, maxheight, wname)
 		return false
 	end
 
-	local horizontalsList = debugUI.loveframes.Create("list",window)
-	horizontalsList:SetDisplayType("vertical")
-	horizontalsList:SetSize(165,maxheight-45)
-	horizontalsList:SetPos(0,50)
-	
-	for i,debugObject in ipairs(mainTable) do
-		local panel = debugObject:setup()
-		horizontalsList:AddItem(panel)
+	local tabs = nil
+
+	local loops =  1
+	if tabbed then
+		loops = #t
+		tabs = debugUI.loveframes.Create("tabs",window)
+		tabs:SetPos(0,25)
+		tabs:SetSize(165,maxheight-20)
+		tabs:SetPadding(0)
+	end
+	for j = 1,loops do
+		local horizontalsList = debugUI.loveframes.Create("list")
+		horizontalsList:SetDisplayType("vertical")
+		horizontalsList:SetSize(165,maxheight-45)
+		if tabbed then
+			tabs:AddTab(args[j] or ("Tab" ..j),horizontalsList)
+		else
+			horizontalsList:SetParent(window)
+			horizontalsList:SetPos(0,50)
+		end
+		local searchable = tabbed and mainTable[j] or mainTable
+		for i,debugObject in ipairs(searchable) do
+			local panel = debugObject:setup()
+			horizontalsList:AddItem(panel)
+		end
 	end
 	table.insert(debugUI.windows,mainTable)
 	return window
