@@ -1,5 +1,3 @@
-
-
 function love.load()
 	require "debugUI"
 	test = {super = 3}
@@ -21,15 +19,14 @@ function love.load()
 		{var = "testc", name = "testb", type = "checkbox",val = true}},
 		{{var = "argh", type = "dropdown", vals = {"a","b","c"}}}
 	
-	},300,"Options","sliders","checkboxes","dropdowns")
+	}, 300, "Options", "sliders", "checkboxes", "dropdowns")
 	b = debugUI.new(
-	{var = "col", name = "background color", type="color"}
-	)
+		{var = "col", name = "background color", type="color"})
 	col[2] = 100
+	debugUI.hookCallbacks()
 end
 
 function love.update(dt)
-	debugUI.update(dt)
 	test.super = (test.super + 50*dt)%100
 	love.graphics.setBackgroundColor(col)
 	col[1] = (col[1] + 100*dt)%256
@@ -40,23 +37,8 @@ function love.draw()
 		love.graphics.print(test1 .. " * " .. test2 .. " = " .. test1 * test2,300,300)
 	end
 	love.graphics.print("argh: " .. (argh or "[nil]"),300,340)
-	
-	debugUI.draw()
-end
-
-function love.mousepressed(x, y, button)
-	debugUI.mousepressed(x, y, button)
-end
-
-function love.mousereleased(x, y, button)
-	debugUI.mousereleased(x, y, button)
 end
 
 function love.keypressed(key, unicode)
 	if key == "escape" then love.event.push("quit") end
-	debugUI.keypressed(key, unicode)
-end
-
-function love.keyreleased(key)
-	debugUI.keyreleased(key)
 end

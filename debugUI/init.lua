@@ -42,6 +42,63 @@ debugUI.draw = function()
 	debugUI.loveframes.draw()
 end
 
+debugUI.hookCallbacks = function()
+	-- Hook into the love callback functions we need.
+	-- These variable names will show up in error traces,
+	-- so we prefix them with something descriptive to
+	-- hopefully avoid confusion for users who are debugging.
+
+	local debugUI_hooked_love_update = love.update
+	local debugUI_hooked_love_draw = love.draw
+	local debugUI_hooked_love_mousepressed = love.mousepressed
+	local debugUI_hooked_love_mousereleased = love.mousereleased
+	local debugUI_hooked_love_keypressed = love.keypressed
+	local debugUI_hooked_love_keyreleased = love.keyreleased
+
+	-- We wrap the users original functions, calling our
+	-- own callbacks afterwards. We need to check whether
+	-- any given function is defined before calling it, and
+	-- for future compatibility, we preserve parameters and
+	-- return values exactly.
+	love.update = function(...)
+		local ret
+		if debugUI_hooked_love_update then ret = debugUI_hooked_love_update(...) end
+		debugUI.update(...)
+		return ret
+	end
+	love.draw = function(...)
+		local ret
+		if debugUI_hooked_love_draw then ret = debugUI_hooked_love_draw(...) end
+		debugUI.draw(...)
+		return ret
+	end
+	love.mousepressed = function(...)
+		local ret
+		if debugUI_hooked_love_mousepressed then ret = debugUI_hooked_love_mousepressed(...) end
+		debugUI.mousepressed(...)
+		return ret
+	end
+	love.mousereleased = function(...)
+		local ret
+		if debugUI_hooked_love_mousereleased then ret = debugUI_hooked_love_mousereleased(...) end
+		debugUI.mousereleased(...)
+		return ret
+	end
+	love.keypressed = function(...)
+		local ret
+		if debugUI_hooked_love_keypressed then ret = debugUI_hooked_love_keypressed(...) end
+		debugUI.keypressed(...)
+		return ret
+	end
+	love.keyreleased = function(...)
+		local ret
+		if debugUI_hooked_love_keyreleased then ret = debugUI_hooked_love_keyreleased(...) end
+		debugUI.keyreleased(...)
+		return ret
+	end
+
+end
+
 debugUI.new = function(t, maxheight, wname,...)
 	local args = {...}
 
