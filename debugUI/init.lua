@@ -45,15 +45,13 @@ end
 debugUI.hookCallbacks = function()
 	-- Hook into the love callback functions we need.
 	-- These variable names will show up in error traces,
-	-- so we prefix them with something descriptive to
-	-- hopefully avoid confusion for users who are debugging.
-
-	local debugUI_hooked_love_update = love.update
-	local debugUI_hooked_love_draw = love.draw
-	local debugUI_hooked_love_mousepressed = love.mousepressed
-	local debugUI_hooked_love_mousereleased = love.mousereleased
-	local debugUI_hooked_love_keypressed = love.keypressed
-	local debugUI_hooked_love_keyreleased = love.keyreleased
+	-- so we need to make sure they are recognizable.
+	debugUI.hooked = {update = love.update,
+	                  draw = love.draw,
+	                  mousepressed = love.mousepressed,
+	                  mousereleased = love.mousereleased,
+	                  keypressed = love.keypressed,
+	                  keyreleased = love.keyreleased}
 
 	-- We wrap the users original functions, calling our
 	-- own callbacks afterwards. We need to check whether
@@ -62,37 +60,37 @@ debugUI.hookCallbacks = function()
 	-- return values exactly.
 	love.update = function(...)
 		local ret
-		if debugUI_hooked_love_update then ret = debugUI_hooked_love_update(...) end
+		if debugUI.hooked.update then ret = debugUI.hooked.update(...) end
 		debugUI.update(...)
 		return ret
 	end
 	love.draw = function(...)
 		local ret
-		if debugUI_hooked_love_draw then ret = debugUI_hooked_love_draw(...) end
+		if debugUI.hooked.draw then ret = debugUI.hooked.draw(...) end
 		debugUI.draw(...)
 		return ret
 	end
 	love.mousepressed = function(...)
 		local ret
-		if debugUI_hooked_love_mousepressed then ret = debugUI_hooked_love_mousepressed(...) end
+		if debugUI.hooked.mousepressed then ret = debugUI.hooked.mousepressed(...) end
 		debugUI.mousepressed(...)
 		return ret
 	end
 	love.mousereleased = function(...)
 		local ret
-		if debugUI_hooked_love_mousereleased then ret = debugUI_hooked_love_mousereleased(...) end
+		if debugUI.hooked.mousereleased then ret = debugUI.hooked.mousereleased(...) end
 		debugUI.mousereleased(...)
 		return ret
 	end
 	love.keypressed = function(...)
 		local ret
-		if debugUI_hooked_love_keypressed then ret = debugUI_hooked_love_keypressed(...) end
+		if debugUI.hooked.keypressed then ret = debugUI.hooked.keypressed(...) end
 		debugUI.keypressed(...)
 		return ret
 	end
 	love.keyreleased = function(...)
 		local ret
-		if debugUI_hooked_love_keyreleased then ret = debugUI_hooked_love_keyreleased(...) end
+		if debugUI.hooked.keyreleased then ret = debugUI.hooked.keyreleased(...) end
 		debugUI.keyreleased(...)
 		return ret
 	end
