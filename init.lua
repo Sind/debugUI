@@ -1,8 +1,10 @@
 
 --initialize EVERYTHING
+local dpath = ...
+if dpath == "." then dpath = "" else dpath = dpath .. "." end
 debugUI = {windows = {}}
 
-debugUI.loveframes = require "loveframes"
+debugUI.loveframes = require(dpath .. "loveframes")
 
 debugUI.windowPosition = 0
 
@@ -25,10 +27,10 @@ debugUI.setfield = function(f, v)
 		end
 	end
 end
-
-love.filesystem.getDirectoryItems( "debugUI/objects", function(file)
+local opath = string.gsub(dpath,"%.","/")
+love.filesystem.getDirectoryItems(opath .. "objects", function(file)
 	local objectName = file:sub(1,file:len()-4)
-	debugUI[objectName] = love.filesystem.load("debugUI/objects/" .. file)();
+	debugUI[objectName] = love.filesystem.load(opath .. "objects/" .. file)();
 end )
 
 

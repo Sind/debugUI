@@ -1,5 +1,5 @@
 function love.load()
-	require "debugUI"
+	require "."
 	test = {super = 3}
 	ui = debugUI.new(
 	{
