@@ -99,21 +99,22 @@ debugUI.hookCallbacks = function()
 
 end
 
-debugUI.new = function(t, maxheight, wname,...)
-	local args = {...}
+debugUI.new = function(t)
 
 	local single = (type(t[1]) ~= "table")
 	local tabbed = (type(t[1]) == "table") and (type(t[1][1]) == "table")
 	local mainTable = {update = function(self) for i,v in ipairs(self) do v:update() end end}
 	local totalheight = 0
-	maxheight = maxheight or 400
-	
+	local wname = t.name
+	local maxheight = t.maxheight or 400
+
 	if single then
 		local debugObject = debugUI[t.type](t)
 		table.insert(mainTable,debugObject)
 		totalheight = debugObject.height
 	elseif tabbed then
 		subheights = {}
+		subnames = {}
 		for j,u in ipairs(t) do
 			local subTable = {update = function(self) for i,v in ipairs(self) do v:update() end end}
 			local subheight = 0
@@ -122,8 +123,10 @@ debugUI.new = function(t, maxheight, wname,...)
 				table.insert(subTable,debugObject)
 				subheight = subheight + debugObject.height
 			end
+			local name = u.name
 			mainTable[j] = subTable
 			subheights[j] = subheight
+			subnames[j] = name
 		end
 		totalheight = math.max(unpack(subheights))
 	else
@@ -165,7 +168,7 @@ debugUI.new = function(t, maxheight, wname,...)
 		horizontalsList:SetDisplayType("vertical")
 		horizontalsList:SetSize(165,maxheight-45)
 		if tabbed then
-			tabs:AddTab(args[j] or ("Tab" ..j),horizontalsList)
+			tabs:AddTab(subnames[j] or ("Tab" ..j),horizontalsList)
 		else
 			horizontalsList:SetParent(window)
 			horizontalsList:SetPos(0,50)
