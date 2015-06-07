@@ -106,6 +106,7 @@ debugUI.new = function(t, maxheight, wname,...)
 	local tabbed = (type(t[1]) == "table") and (type(t[1][1]) == "table")
 	local mainTable = {update = function(self) for i,v in ipairs(self) do v:update() end end}
 	local totalheight = 0
+	maxheight = maxheight or 400
 	
 	if single then
 		local debugObject = debugUI[t.type](t)
@@ -132,7 +133,7 @@ debugUI.new = function(t, maxheight, wname,...)
 			totalheight = totalheight + debugObject.height
 		end
 	end
-	maxheight = math.min(maxheight or 400,totalheight+45,love.graphics.getHeight())
+	maxheight = math.min(maxheight,totalheight+45,love.graphics.getHeight())
 
 	local window = debugUI.loveframes.Create("frame")
 	if wname then window:SetName(wname) end

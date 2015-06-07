@@ -101,7 +101,7 @@ function newobject:update(dt)
 		v.x = (v.parent.x + v.staticx) - offsetx
 		v.y = (v.parent.y + v.staticy) - offsety
 		for _, p in pairs(self:GetParents()) do
-			v.x = v.x - (p.offsetx or 0)
+			v.x = v.x-- - (p.offsetx or 0)
 			v.y = v.y - (p.offsety or 0)
 		end
 		if display == "vertical" then

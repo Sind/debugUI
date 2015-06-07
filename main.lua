@@ -1,6 +1,10 @@
 function love.load()
+	-- Load debugUI, by loading its folder.
+	-- We are in the debugUI folder right now, so we use 'require "."'
 	require "."
 	test = {super = 3}
+
+	-- Create debugUI windows
 	ui = debugUI.new(
 	{
 		{{var = "test6", name = "print text", type = "checkbox"},
@@ -23,6 +27,7 @@ function love.load()
 	b = debugUI.new(
 		{var = "col", name = "background color", type="color"})
 	col[2] = 100
+
 	debugUI.hookCallbacks()
 end
 
