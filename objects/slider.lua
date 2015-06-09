@@ -1,6 +1,8 @@
 local slider = debugUI.loveframes.class('slider')
 
-slider.initialize =  function(self,v)
+--initialize function sets the basic required variables,
+--using input table v
+slider.initialize = function(self,v)
 	self.var = v.var
 	self.name = v.name or self.var
 	self.height = 60-- math.max(love.graphics.getFont():getWidth(self.name)+4,60)
@@ -10,6 +12,8 @@ slider.initialize =  function(self,v)
 	self.max = v.max or 1
 end
 
+--update function runs every update, checks for changes and synchs values
+--also has to change the ui as appropriate
 slider.update = function(self)
 	local oldGlobal = debugUI.getfield(self.var)
 	local oldUI = self.ui.slider:GetValue()
@@ -23,6 +27,9 @@ slider.update = function(self)
 	self.ui.value:SetText(string.format("%.2f",self.val))
 end
 
+--setup is an initialization function that shoud set up the ui for the widget
+--all widgets have width 150, and height defined in the initialize function.
+--setup returns a panel that contains the entire ui
 slider.setup = function(self)
 	self.ui = {}
 	local panel = debugUI.loveframes.Create("panel")

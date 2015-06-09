@@ -27,8 +27,8 @@ function love.load()
 			{var = "testb", name = "testc", type = "checkbox", val = true},
 			{var = "testc", name = "testb", type = "checkbox", val = true}
 		},
+		{name = "angles", {var = "testinf", type = "angle", val = math.pi}},
 		{name = "dropdowns",{var = "argh", type = "dropdown", vals = {"a","b","c"}}}
-	
 	})
 	b = debugUI.new({var = "col", name = "background color", type="color"})
 	col[2] = 100
@@ -40,6 +40,7 @@ function love.update(dt)
 	test.super = (test.super + 50*dt)%100
 	love.graphics.setBackgroundColor(col)
 	col[1] = (col[1] + 100*dt)%256
+	-- testinf = testinf + dt*math.pi/5
 end
 
 function love.draw()
