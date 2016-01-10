@@ -174,7 +174,7 @@ function newobject:draw()
 	end
 		
 	love.graphics.stencil(stencilfunc)
-	love.graphics.setStencilTest(true)
+	love.graphics.setStencilTest("greater",0)
 		
 	for k, v in ipairs(children) do
 		local col = loveframes.util.BoundingBox(self.x, v.x, self.y, v.y, self.width, v.width, self.height, v.height)
@@ -183,7 +183,7 @@ function newobject:draw()
 		end
 	end
 		
-	love.graphics.setStencilTest(false)
+	love.graphics.setStencilTest()
 	
 	if not draw then
 		drawoverfunc(self)
