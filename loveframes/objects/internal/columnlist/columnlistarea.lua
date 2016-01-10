@@ -132,7 +132,8 @@ function newobject:draw()
 		drawfunc(self)
 	end
 	
-	love.graphics.setStencil(stencilfunc)
+	love.graphics.stencil(stencilfunc)
+	love.graphics.setStencilTest(true)
 	
 	for k, v in ipairs(self.children) do
 		local col = loveframes.util.BoundingBox(self.x, v.x, self.y, v.y, width, v.width, height, v.height)
@@ -141,7 +142,7 @@ function newobject:draw()
 		end
 	end
 	
-	love.graphics.setStencil()
+	love.graphics.setStencilTest(false)
 	
 	for k, v in ipairs(self.internals) do
 		v:draw()
@@ -161,36 +162,10 @@ function newobject:mousepressed(x, y, button)
 
 	local scrollamount = self.mousewheelscrollamount
 	
-	if self.hover and button == "l" then
+	if self.hover and button == 1 then
 		local baseparent = self:GetBaseParent()
 		if baseparent and baseparent.type == "frame" then
 			baseparent:MakeTop()
-		end
-	end
-	
-	local bar = false 
-	if self.vbar and self.hbar then
-		bar = self:GetVerticalScrollBody():GetScrollBar()
-	elseif self.vbar and not self.hbar then
-		bar = self:GetVerticalScrollBody():GetScrollBar()
-	elseif not self.var and self.hbar then
-		bar = self:GetHorizontalScrollBody():GetScrollBar()
-	end
-	
-	if self:IsTopList() and bar then
-		if self.dtscrolling then
-			local dt = love.timer.getDelta()
-			if button == "wu" then
-				bar:Scroll(-scrollamount * dt)
-			elseif button == "wd" then
-				bar:Scroll(scrollamount * dt)
-			end
-		else
-			if button == "wu" then
-				bar:Scroll(-scrollamount)
-			elseif button == "wd" then
-				bar:Scroll(scrollamount)
-			end
 		end
 	end
 	
@@ -219,6 +194,41 @@ function newobject:mousereleased(x, y, button)
 	
 	for k, v in ipairs(children) do
 		v:mousereleased(x, y, button)
+	end
+
+end
+
+--[[---------------------------------------------------------
+	- func: wheelmoved(x, y)
+	- desc: called when the player moves a mouse wheel
+--]]---------------------------------------------------------
+function newobject:wheelmoved(x, y)
+
+	local scrollamount = self.mousewheelscrollamount
+
+	if self.hover and button == 1 then
+		local baseparent = self:GetBaseParent()
+		if baseparent and baseparent.type == "frame" then
+			baseparent:MakeTop()
+		end
+	end
+
+	local bar = false
+	if self.vbar and self.hbar then
+		bar = self:GetVerticalScrollBody():GetScrollBar()
+	elseif self.vbar and not self.hbar then
+		bar = self:GetVerticalScrollBody():GetScrollBar()
+	elseif not self.vbar and self.hbar then
+		bar = self:GetHorizontalScrollBody():GetScrollBar()
+	end
+
+	if self:IsTopList() and bar then
+		if self.dtscrolling then
+			local dt = love.timer.getDelta()
+			bar:Scroll(-y * scrollamount * dt)
+		else
+			bar:Scroll(-y * scrollamount)
+		end
 	end
 
 end
@@ -256,7 +266,7 @@ function newobject:CalculateSize()
 			local newbar = loveframes.objects["scrollbody"]:new(self, "vertical")
 			table.insert(self.internals, newbar)
 			self.vbar = true
-			newbar.autoscroll = parent.autoscroll
+			newbar:GetScrollBar().autoscroll = parent.autoscroll
 			self.itemwidth = self.itemwidth + newbar.width
 			self.extrawidth = self.itemwidth - width
 		end
@@ -283,7 +293,6 @@ function newobject:CalculateSize()
 			local newbar = loveframes.objects["scrollbody"]:new(self, "horizontal")
 			table.insert(self.internals, newbar)
 			self.hbar = true
-			newbar.autoscroll = parent.autoscroll
 			self.itemheight = self.itemheight + newbar.height
 			self.extraheight = self.itemheight - height
 		end

@@ -66,6 +66,7 @@ function newobject:initialize()
 	self.internal = false
 	self.autoscroll = false
 	self.masked = false
+	self.trackindicator = true
 	self.OnEnter = nil
 	self.OnTextChanged = nil
 	self.OnFocusGained = nil
@@ -301,7 +302,8 @@ function newobject:draw()
 		stencilfunc = function() love.graphics.rectangle("fill", x, y, width - 16, height - 16) end
 	end
 	
-	love.graphics.setStencil(stencilfunc)
+	love.graphics.stencil(stencilfunc)
+	love.graphics.setStencilTest(true)
 	
 	if draw then
 		draw(self)
@@ -309,7 +311,7 @@ function newobject:draw()
 		drawfunc(self)
 	end
 	
-	love.graphics.setStencil()
+	love.graphics.setStencilTest(false)
 	
 	for k, v in ipairs(internals) do
 		v:draw()
@@ -353,7 +355,7 @@ function newobject:mousepressed(x, y, button)
 	local inputobject = loveframes.inputobject
 	
 	if hover then
-		if button == "l" then
+		if button == 1 then
 			if inputobject ~= self then
 				loveframes.inputobject = self
 			end
@@ -930,6 +932,10 @@ function newobject:UpdateIndicator()
 	
 	if alltextselected then
 		self.showindicator = false
+	else
+		if love.keyboard.isDown("up", "down", "left", "right") then
+			self.showindicator = true
+		end
 	end
 	
 	local width = 0
@@ -953,7 +959,7 @@ function newobject:UpdateIndicator()
 	end
 	
 	-- indicator should be visible, so correcting scrolls
-	if self.focus then
+	if self.focus and self.trackindicator then
 		local indicatorRelativeX = width + self.textoffsetx - self.offsetx
 		local leftlimit, rightlimit = 1, self:GetWidth() - 1
 		if self.linenumberspanel then
@@ -2105,5 +2111,30 @@ function newobject:ClearLine(line)
 	end
 	
 	return self
+	
+end
+
+--[[---------------------------------------------------------
+	- func: SetTrackingEnabled(bool)
+	- desc: sets whether or not the object should
+			automatically scroll to the position of its
+			indicator
+--]]---------------------------------------------------------
+function newobject:SetTrackingEnabled(bool)
+
+	self.trackindicator = bool
+	return self
+	
+end
+
+--[[---------------------------------------------------------
+	- func: GetTrackingEnabled()
+	- desc: gets whether or not the object should
+			automatically scroll to the position of its
+			indicator
+--]]---------------------------------------------------------
+function newobject:GetTrackingEnabled()
+
+	return self.trackindicator
 	
 end

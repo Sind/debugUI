@@ -107,7 +107,7 @@ function newobject:mousepressed(x, y, button)
 		return
 	end
 	
-	if self.hover and button == "l" then
+	if self.hover and button == 1 then
 		local baseparent = self:GetBaseParent()
 		if baseparent and baseparent.type == "frame" then
 			baseparent:MakeTop()
@@ -129,12 +129,12 @@ function newobject:mousereleased(x, y, button)
 	
 	if self.hover then
 		local parent = self:GetParent():GetParent()
-		if button == "l" then
+		if button == 1 then
 			local onrowclicked = parent.OnRowClicked
 			if onrowclicked then
 				onrowclicked(parent, self, self.columndata)
 			end
-		elseif button == "r" then
+		elseif button == 2 then
 			local onrowrightclicked = parent.OnRowRightClicked
 			if onrowrightclicked then
 				onrowrightclicked(parent, self, self.columndata)

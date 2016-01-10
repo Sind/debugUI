@@ -28,10 +28,11 @@ debugUI.setfield = function(f, v)
 	end
 end
 local opath = string.gsub(dpath,"%.","/")
-love.filesystem.getDirectoryItems(opath .. "objects", function(file)
+local objectFiles = love.filesystem.getDirectoryItems(opath .. "objects")
+for k, file in ipairs(objectFiles) do
 	local objectName = file:sub(1,file:len()-4)
 	debugUI[objectName] = love.filesystem.load(opath .. "objects/" .. file)();
-end )
+end
 
 
 debugUI.update = function(dt)

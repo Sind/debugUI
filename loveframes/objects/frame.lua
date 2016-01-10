@@ -488,7 +488,7 @@ function newobject:mousepressed(x, y, button)
 	local parent = self.parent
 	local base = loveframes.base
 	
-	if button == "l" then
+	if button == 1 then
 		-- initiate dragging if not currently dragging
 		if not dragging and self.hover and self.draggable  then
 			local topcol
@@ -626,7 +626,7 @@ function newobject:mousepressed(x, y, button)
 				end
 			end
 		end
-		if self.hover and button == "l" then
+		if self.hover and button == 1 then
 			self:MakeTop()
 		end
 	end
