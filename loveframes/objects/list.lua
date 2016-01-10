@@ -101,10 +101,8 @@ function newobject:update(dt)
 		v.x = (v.parent.x + v.staticx) - offsetx
 		v.y = (v.parent.y + v.staticy) - offsety
 		for _, p in pairs(self:GetParents()) do
-			if p.type ~= "tabs" then
-				v.x = v.x - (p.offsetx or 0)
-				v.y = v.y - (p.offsety or 0)
-			end
+			v.x = v.x-- - (p.offsetx or 0)
+			v.y = v.y - (p.offsety or 0)
 		end
 		if display == "vertical" then
 			if v.lastheight ~= v.height then
@@ -165,7 +163,8 @@ function newobject:draw()
 		drawfunc(self)
 	end
 	
-	love.graphics.setStencil(stencilfunc)
+	love.graphics.stencil(stencilfunc)
+	love.graphics.setStencilTest("greater", 0)
 		
 	for k, v in ipairs(children) do
 		local col = loveframes.util.BoundingBox(x, v.x, y, v.y, width, v.width, height, v.height)
@@ -174,7 +173,7 @@ function newobject:draw()
 		end
 	end
 	
-	love.graphics.setStencil()
+	love.graphics.setStencilTest()
 	
 	for k, v in ipairs(internals) do
 		v:draw()
@@ -205,39 +204,14 @@ function newobject:mousepressed(x, y, button)
 		return
 	end
 	
-	local toplist = self:IsTopList()
 	local hover = self.hover
-	local vbar = self.vbar
-	local hbar = self.hbar
-	local scrollamount = self.mousewheelscrollamount
 	local children = self.children
 	local internals = self.internals
 	
-	if hover and button == "l" then
+	if hover and button == 1 then
 		local baseparent = self:GetBaseParent()
 		if baseparent and baseparent.type == "frame" then
 			baseparent:MakeTop()
-		end
-	end
-	
-	if vbar or hbar then
-		if toplist then
-			local bar = self:GetScrollBar()
-			local dtscrolling = self.dtscrolling
-			if dtscrolling then
-				local dt = love.timer.getDelta()
-				if button == "wu" then
-					bar:Scroll(-scrollamount * dt)
-				elseif button == "wd" then
-					bar:Scroll(scrollamount * dt)
-				end
-			else
-				if button == "wu" then
-					bar:Scroll(-scrollamount)
-				elseif button == "wd" then
-					bar:Scroll(scrollamount)
-				end
-			end
 		end
 	end
 	
@@ -247,6 +221,30 @@ function newobject:mousepressed(x, y, button)
 	
 	for k, v in ipairs(children) do
 		v:mousepressed(x, y, button)
+	end
+
+end
+
+--[[---------------------------------------------------------
+	- func: wheelmoved(x, y)
+	- desc: called when the player moves a mouse wheel
+--]]---------------------------------------------------------
+function newobject:wheelmoved(x, y)
+
+	local toplist = self:IsTopList()
+	local vbar = self.vbar
+	local hbar = self.hbar
+	local scrollamount = self.mousewheelscrollamount
+
+	if (vbar or hbar) and toplist then
+		local bar = self:GetScrollBar()
+		local dtscrolling = self.dtscrolling
+		if dtscrolling then
+			local dt = love.timer.getDelta()
+			bar:Scroll(-y * scrollamount * dt)
+		else
+			bar:Scroll(-y * scrollamount)
+		end
 	end
 
 end

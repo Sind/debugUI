@@ -173,7 +173,8 @@ function newobject:draw()
 		v:draw()
 	end
 		
-	love.graphics.setStencil(stencilfunc)
+	love.graphics.stencil(stencilfunc)
+	love.graphics.setStencilTest("greater",0)
 		
 	for k, v in ipairs(children) do
 		local col = loveframes.util.BoundingBox(self.x, v.x, self.y, v.y, self.width, v.width, self.height, v.height)
@@ -182,7 +183,7 @@ function newobject:draw()
 		end
 	end
 		
-	love.graphics.setStencil()
+	love.graphics.setStencilTest()
 	
 	if not draw then
 		drawoverfunc(self)
@@ -210,32 +211,11 @@ function newobject:mousepressed(x, y, button)
 	end
 	
 	local selfcol = loveframes.util.BoundingBox(x, self.x, y, self.y, 1, self.width, 1, self.height)
-	local toplist = self:IsTopList()
 	local internals = self.internals
 	local children = self.children
-	local scrollamount = self.mousewheelscrollamount
 	
-	if not selfcol and self.canremove and button == "l" then
+	if not selfcol and self.canremove and button == 1 then
 		self:Close()
-	end
-	
-	if self.vbar and toplist then
-		local bar = internals[1].internals[1].internals[1]
-		local dtscrolling = self.dtscrolling
-		if dtscrolling then
-			local dt = love.timer.getDelta()
-			if button == "wu" then
-				bar:Scroll(-scrollamount * dt)
-			elseif button == "wd" then
-				bar:Scroll(scrollamount * dt)
-			end
-		else
-			if button == "wu" then
-				bar:Scroll(-scrollamount)
-			elseif button == "wd" then
-				bar:Scroll(scrollamount)
-			end
-		end
 	end
 	
 	for k, v in ipairs(internals) do
@@ -278,6 +258,29 @@ function newobject:mousereleased(x, y, button)
 	
 	for k, v in ipairs(children) do
 		v:mousereleased(x, y, button)
+	end
+
+end
+
+--[[---------------------------------------------------------
+	- func: wheelmoved(x, y)
+	- desc: called when the player moves a mouse wheel
+--]]---------------------------------------------------------
+function newobject:wheelmoved(x, y)
+
+	local toplist = self:IsTopList()
+	local internals = self.internals
+	local scrollamount = self.mousewheelscrollamount
+
+	if self.vbar and toplist then
+		local bar = internals[1].internals[1].internals[1]
+		local dtscrolling = self.dtscrolling
+		if dtscrolling then
+			local dt = love.timer.getDelta()
+			bar:Scroll(-y * scrollamount * dt)
+		else
+			bar:Scroll(-y * scrollamount)
+		end
 	end
 
 end
