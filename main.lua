@@ -1,3 +1,5 @@
+
+
 function love.load()
 	-- Load debugUI, by loading its folder.
 	-- We are in the debugUI folder right now, so we use 'require "."'
@@ -28,18 +30,34 @@ function love.load()
 			{var = "testc", name = "testb", type = "checkbox", val = true}
 		},
 		{name = "angles", {var = "testinf", type = "angle", val = math.pi}},
-		{name = "dropdowns",{var = "argh", type = "dropdown", vals = {"a","b","c"}}}
+		{name = "dropdowns",{var = "argh", type = "dropdown", vals = {"a","b","c"}}},
+		{name = "strings",
+			{var = "string1", type = "string", val = "hey"},
+			{var = "string2", type = "string", val = "a", editable = false}
+		}
+	
 	})
 	b = debugUI.new({var = "col", name = "background color", type="color"})
 	col[2] = 100
 
 	debugUI.hookCallbacks()
+
+	rotstrings = {"a", "b", "c"}
+	roti = 1
+	rotacc = 0
 end
 
 function love.update(dt)
 	test.super = (test.super + 50*dt)%100
 	love.graphics.setBackgroundColor(col)
 	col[1] = (col[1] + 100*dt)%256
+	rotacc = rotacc + dt
+	while rotacc > 1 do
+		rotacc = rotacc - 1
+		roti = roti + 1
+		if roti == 4 then roti = 1 end
+		string2 = rotstrings[roti]
+	end
 	-- testinf = testinf + dt*math.pi/5
 end
 
@@ -48,6 +66,7 @@ function love.draw()
 		love.graphics.print(test1 .. " * " .. test2 .. " = " .. test1 * test2,300,300)
 	end
 	love.graphics.print("argh: " .. (argh or "[nil]"),300,340)
+	love.graphics.print(string1 .. string2, 300, 400)
 end
 
 function love.keypressed(key, unicode)

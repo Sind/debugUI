@@ -54,7 +54,8 @@ debugUI.hookCallbacks = function()
 	                  mousepressed = love.mousepressed,
 	                  mousereleased = love.mousereleased,
 	                  keypressed = love.keypressed,
-	                  keyreleased = love.keyreleased}
+	                  keyreleased = love.keyreleased,
+	                  textinput = love.textinput}
 
 	-- We wrap the users original functions, calling our
 	-- own callbacks afterwards. We need to check whether
@@ -96,6 +97,11 @@ debugUI.hookCallbacks = function()
 		if debugUI.hooked.keyreleased then ret = debugUI.hooked.keyreleased(...) end
 		debugUI.keyreleased(...)
 		return ret
+	end
+	love.textinput = function(...)
+		local ret
+		if debugUI.hooked.textinput then ret = debugUI.hooked.textinput(...) end
+		debugUI.textinput(...)
 	end
 
 end
@@ -204,4 +210,8 @@ end
 
 function debugUI.keyreleased(key,unicode)
 	debugUI.loveframes.keyreleased(key)
+end
+
+function debugUI.textinput(key)
+	debugUI.loveframes.textinput(key)
 end

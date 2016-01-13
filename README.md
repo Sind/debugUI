@@ -35,6 +35,17 @@ For use with a boolean variable.
 	val: initial value of the variable
 		defaults to the value of the variable at the time of creating, if it exists. If not, defaults to 'false'
 
+### string
+For use with arbitrary strings, or printing a string out
+#### inputs
+	*var: name of variable
+	name: name of module instance
+		defaults to variable name
+	val: initial value of the variable
+		defaults to the value of the variable at the time of creating, if it exists. If not, defaults to empty string ""
+	editable: whether the user can use the debugUI module instance to edit the string or not. Use this to print a string to the user, that they cannot edit
+		defaults to true
+
 ### dropdown
 For use with a string with a set of valid values.
 #### inputs

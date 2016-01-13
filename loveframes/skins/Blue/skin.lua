@@ -1043,7 +1043,13 @@ function skin.DrawTextInput(object)
 	local highlightbarcolor = skin.controls.textinput_highlight_bar_color
 	local indicatorcolor = skin.controls.textinput_indicator_color
 	
-	love.graphics.setColor(bodycolor)
+	--debugUI specific
+	local editable = object:GetEditable()
+	if editable then
+		love.graphics.setColor(bodycolor)
+	else
+		love.graphics.setColor(200,200,200,255)
+	end
 	love.graphics.rectangle("fill", x, y, width, height)
 	
 	if alltextselected then
