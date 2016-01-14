@@ -70,6 +70,7 @@ function newobject:update(dt)
 		if downobject == self then
 			self.down = true
 		end
+		if self.OnHover then self.OnHover(self) end
 	end
 	
 	-- move to parent if there is a parent

@@ -47,11 +47,13 @@ angle.setup = function(self)
 		love.graphics.line(center.x, center.y, center.x+edge.x, center.y+edge.y)
 	end
 
-	button.OnClick = function(self)
-		local x,y = love.mouse.getPosition()
-		local center = {x = self.x+65, y = self.y+65}
-		self.val = math.atan2(y-center.y,x-center.x)
-		if self.val < 0 then self.val = self.val + 2*math.pi end
+	button.OnHover = function(self)
+		if love.mouse.isDown(1) then
+			local x,y = love.mouse.getPosition()
+			local center = {x = self.x+65, y = self.y+65}
+			self.val = math.atan2(y-center.y,x-center.x)
+			if self.val < 0 then self.val = self.val + 2*math.pi end
+		end
 	end
 
 	local name = debugUI.loveframes.Create("text", panel)
