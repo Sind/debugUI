@@ -29,7 +29,10 @@ function love.load()
 			{var = "testb", name = "testc", type = "checkbox", val = true},
 			{var = "testc", name = "testb", type = "checkbox", val = true}
 		},
-		{name = "angles", {tooltip= "angle tooltip",var = "testinf", type = "angle", val = math.pi}},
+		{name = "angles",
+			{tooltip= "angle tooltip",var = "testinf", type = "angle", val = math.pi},
+			{tooltip= "vector tooltip",var = "testvec",val = {0,1},type = "vector",r=500}
+		},
 		{name = "dropdowns",{tooltip = "dropdown tooltip",var = "argh", type = "dropdown", vals = {"a","b","c"}}},
 		{name = "strings",
 			{tooltip = "string tooltip",var = "string1", type = "string", val = "hey"},

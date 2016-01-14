@@ -7,7 +7,6 @@ angle.initialize = function(self,v)
 	self.val = v.val or debugUI.getfield(self.var) or 0
 	self.tooltip = v.tooltip
 	debugUI.setfield(self.var,self.val)
-
 end
 
 angle.update = function(self)
@@ -31,6 +30,7 @@ angle.setup = function(self)
 	button:SetPos(10,28)
 	button:SetSize(130,130)
 	button.val = self.val
+	button.r = self.r
 	button.draw = function(self)
 		local center = {x = self.x + 65, y = self.y+65}
 		local edge = {}
