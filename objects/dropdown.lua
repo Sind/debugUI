@@ -6,6 +6,7 @@ dropdown.initialize = function(self,v)
 	self.height = 50
 	self.vals = v.vals
 	self.val = v.val or debugUI.getfield(self.var) or nil
+	self.tooltip = v.tooltip
 	debugUI.setfield(self.var,self.val)
 end
 

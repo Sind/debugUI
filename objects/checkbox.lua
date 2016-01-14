@@ -5,6 +5,7 @@ checkbox.initialize = function(self,v)
 	self.name = v.name or self.var
 	self.height = 30
 	self.val = debugUI.getfield(self.var) or v.val or false
+	self.tooltip = v.tooltip
 	debugUI.setfield(self.var,self.val)
 end
 

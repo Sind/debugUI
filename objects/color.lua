@@ -10,6 +10,8 @@ color.initialize = function(self,v)
 	self.val.g = (v.val and v.val[2]) or (orval and orval[2]) or 255
 	self.val.b = (v.val and v.val[3]) or (orval and orval[3]) or 255
 	self.val.a = (v.val and v.val[4]) or (orval and orval[4]) or 255
+	self.tooltip = v.tooltip
+
 	debugUI.setfield(self.var,{self.val.r,self.val.g,self.val.b,self.val.a})
 end
 

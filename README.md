@@ -25,6 +25,8 @@ For use with a number with a continuous range.
 		defaults to '0'
 	max: maximum valid value to define the range of the slider
 		defaults to '1'
+    tooltip: string to display when hovering over the module instance
+    	defaults to no tooltip
 
 ### checkbox
 For use with a boolean variable.
@@ -34,6 +36,8 @@ For use with a boolean variable.
 		defaults to variable name
 	val: initial value of the variable
 		defaults to the value of the variable at the time of creating, if it exists. If not, defaults to 'false'
+    tooltip: string to display when hovering over the module instance
+    	defaults to no tooltip
 
 ### string
 For use with arbitrary strings, or printing a string out
@@ -45,6 +49,8 @@ For use with arbitrary strings, or printing a string out
 		defaults to the value of the variable at the time of creating, if it exists. If not, defaults to empty string ""
 	editable: whether the user can use the debugUI module instance to edit the string or not. Use this to print a string to the user, that they cannot edit
 		defaults to true
+    tooltip: string to display when hovering over the module instance
+    	defaults to no tooltip
 
 ### dropdown
 For use with a string with a set of valid values.
@@ -55,6 +61,8 @@ For use with a string with a set of valid values.
 	*vals: list of valid strings.
 	val: initial value of the variable
 		defaults to the value of the variable at the time of creating, if it exists. If not, defaults to 'nil'
+    tooltip: string to display when hovering over the module instance
+    	defaults to no tooltip
 
 ### color
 For use with a color value(table with 4 variables {r,g,b,a})
@@ -64,6 +72,8 @@ For use with a color value(table with 4 variables {r,g,b,a})
 		defaults to variable name
 	val: initial value of the variable
 		defaults to the value of the variable at the time of creating, if it exists. If not, defaults to '{255,255,255,255}'
+    tooltip: string to display when hovering over the module instance
+    	defaults to no tooltip
 
 ### angle
 For use with an angle in radians from 0 to 2*pi
@@ -73,6 +83,8 @@ For use with an angle in radians from 0 to 2*pi
 		defaults to variable name
 	val: initial value of the variable
 	defaults to the value of the variable at the time of creating, if it exists. If not, defaults to '0'
+    tooltip: string to display when hovering over the module instance
+    	defaults to no tooltip
 
 ---
 

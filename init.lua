@@ -183,6 +183,14 @@ debugUI.new = function(t)
 		local searchable = tabbed and mainTable[j] or mainTable
 		for i,debugObject in ipairs(searchable) do
 			local panel = debugObject:setup()
+			if debugObject.tooltip then
+				for k,v in pairs(debugObject.ui) do
+					local tooltip = debugUI.loveframes.Create("tooltip")
+					tooltip:SetObject(v)
+					tooltip:SetPadding(10)
+					tooltip:SetText(debugObject.tooltip)
+				end
+			end
 			horizontalsList:AddItem(panel)
 		end
 	end

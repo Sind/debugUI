@@ -6,10 +6,11 @@ slider.initialize = function(self,v)
 	self.var = v.var
 	self.name = v.name or self.var
 	self.height = 60-- math.max(love.graphics.getFont():getWidth(self.name)+4,60)
-	self.val = v.val or debugUI.getfield(self.var) or v.min
-	debugUI.setfield(self.var,self.val)
 	self.min = v.min or 0
 	self.max = v.max or 1
+	self.val = v.val or debugUI.getfield(self.var) or self.min
+	self.tooltip = v.tooltip
+	debugUI.setfield(self.var,self.val)
 end
 
 --update function runs every update, checks for changes and synchs values

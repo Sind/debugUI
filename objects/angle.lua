@@ -5,7 +5,9 @@ angle.initialize = function(self,v)
 	self.name = v.name or self.var
 	self.height = 180
 	self.val = v.val or debugUI.getfield(self.var) or 0
+	self.tooltip = v.tooltip
 	debugUI.setfield(self.var,self.val)
+
 end
 
 angle.update = function(self)

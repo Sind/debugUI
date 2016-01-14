@@ -5,13 +5,13 @@ string.initialize = function(self,v)
 	self.name = v.name or self.var
 	self.height = 50
 	self.val = v.val or debugUI.getfield(self.var) or ""
-	print(self.var)
-	debugUI.setfield(self.var,self.val)
+	self.tooltip = v.tooltip	
 	if v.editable == false then
 		self.editable = false
 	else
 		self.editable = true
 	end
+	debugUI.setfield(self.var,self.val)
 end
 
 string.update = function(self)
