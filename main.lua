@@ -37,7 +37,10 @@ function love.load()
 		}
 	
 	})
-	b = debugUI.new({tooltip = "color tooltip",var = "col", name = "background color", type="color"})
+	b = debugUI.new({var = "col", name = "background color", type="color", tooltip = 
+[[really long color tooltip that I am cutting
+up into three lines to avoid it going out of
+the screen or being uncomfortable to read]]})
 	col[2] = 100
 
 	debugUI.hookCallbacks()
