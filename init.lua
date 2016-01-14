@@ -189,6 +189,7 @@ debugUI.new = function(t)
 					tooltip:SetObject(v)
 					tooltip:SetPadding(10)
 					tooltip:SetText(debugObject.tooltip)
+					tooltip:SetOffsetY(20)
 				end
 			end
 			horizontalsList:AddItem(panel)

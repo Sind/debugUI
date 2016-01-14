@@ -102,7 +102,7 @@ function newobject:update(dt)
 				local height = self.height
 				local mx, my = love.mouse.getPosition()
 				self.x = mx + xoffset
-				self.y = my - height + yoffset
+				self.y = my + yoffset
 			elseif followobject then
 				local ox = object.x
 				local oy = object.y

@@ -123,6 +123,7 @@ color.setup = function(self)
 	aval:SetPos(123,220)
 
 	self.ui.panel = panel
+	self.ui.name = name
 	self.ui.cpanel = cpanel
 	self.ui.rslider = rslider
 	self.ui.gslider = gslider
