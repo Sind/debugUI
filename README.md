@@ -9,13 +9,75 @@ debugUI library for use with the LÖVE framework
 Usage
 -----
 
-This section is not yet complete; for now, check `main.lua` for examples.
+*This section is not yet complete; for now, check `main.lua` for examples.*
+
+To use debugUI, make sure you have the following calls:
+
+either
+	function love.load()
+		require "[path to debugUI folder]"
+	end
+	function love.update(dt)
+		debugUI.update(dt)
+	end
+	function love.draw()
+		debugUI.draw()
+	end
+	function love.mousepressed(x, y, button, istouch)
+		debugUI.mousepressed(x, y, button, istouch)
+	end
+	function love.mousereleased(x, y, button, istouch)
+		debugUI.mousereleased(x, y, button, istouch)
+	end
+	function love.keypressed(key, scancode, isrepeat)
+		debugUI.keypressed(key, scancode, isrepeat)
+	end
+	function love.keyreleased(key, scancode)
+		debugUI.keyreleased(key,scancode)
+	end
+	function love.textinput(text)
+		debugUI.textinput(text)
+	end
+or
+	function love.load()
+		require "[path to debugUI folder]"
+		debugUI.hookCallbacks
+	end
+
+then, create debugUI windows using 
+	debugUI.new([instances],[options])
+
+[instances] is a table that describes what ojects the debugUI window should contain.
+[options] is a table that describes properties of the window itself.
+
+Instances table
+---------------
+
+Options table
+-------------
+Here is a list of all options:
+
+####name:
+Name of the window
+	defaults to "Options"
+
+####minheight:
+Minimum height of the window
+	defaults to '0'
+
+####maxheight
+Maximum height of the window
+	defaults to '400'
+
+###minimized
+If the window should start of minimized
+	defaults to 'false'
 
 Modules
 -------
 ### slider
 For use with a number with a continuous range.
-#### inputs
+##### inputs
 	*var: name of variable
 	name: name of the module instance
 		defaults to variable name
@@ -30,7 +92,7 @@ For use with a number with a continuous range.
 
 ### checkbox
 For use with a boolean variable.
-#### inputs
+##### inputs
 	*var: name of variable
 	name: name of the module instance
 		defaults to variable name
@@ -41,7 +103,7 @@ For use with a boolean variable.
 
 ### string
 For use with arbitrary strings, or printing a string out
-#### inputs
+##### inputs
 	*var: name of variable
 	name: name of module instance
 		defaults to variable name
@@ -54,7 +116,7 @@ For use with arbitrary strings, or printing a string out
 
 ### dropdown
 For use with a string with a set of valid values.
-#### inputs
+##### inputs
 	*var: name of variable
 	name: name of module instance
 		defaults to variable name
@@ -66,7 +128,7 @@ For use with a string with a set of valid values.
 
 ### color
 For use with a color value(table with 4 variables {r,g,b,a})
-#### inputs
+##### inputs
 	*var: name of variable
 	name: name of module instance
 		defaults to variable name
@@ -77,7 +139,7 @@ For use with a color value(table with 4 variables {r,g,b,a})
 
 ### angle
 For use with an angle in radians from 0 to 2*pi
-#### inputs
+##### inputs
 	*var: name of the variable
 	name: name of the module instance
 		defaults to variable name
@@ -88,7 +150,7 @@ For use with an angle in radians from 0 to 2*pi
 
 ### angle
 For use with 2d vectors in 
-#### inputs
+##### inputs
 	*var: name of the variable
 	name: name of the module instance
 		defaults to variable name
@@ -98,6 +160,12 @@ For use with 2d vectors in
 		defaults to '1'
 	tooltip: string to display when hovering over the module instance
 		defaults to no tooltip
+
+
+### New Modules
+You can make new modules yourself. the slider.lua file in the "objects" subfolder explains how modules work.
+
+Also, feel free to request new modules in the debugUI issue tracker.
 
 ---
 

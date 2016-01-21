@@ -106,14 +106,16 @@ debugUI.hookCallbacks = function()
 
 end
 
-debugUI.new = function(t)
+debugUI.new = function(t,options)
 
 	local single = (type(t[1]) ~= "table")
 	local tabbed = (type(t[1]) == "table") and (type(t[1][1]) == "table")
 	local mainTable = {update = function(self) for i,v in ipairs(self) do v:update() end end}
 	local totalheight = 0
-	local wname = t.name
-	local maxheight = t.maxheight or 400
+	local wname = options and options.name
+	local minimized = options and options.minimized
+	local maxheight = options and options.maxheight or 400
+	local minheight = options and options.minheight or 100
 
 	if single then
 		local debugObject = debugUI[t.type](t)
@@ -143,11 +145,11 @@ debugUI.new = function(t)
 			totalheight = totalheight + debugObject.height
 		end
 	end
-	maxheight = math.min(maxheight,totalheight+45,love.graphics.getHeight())
+	maxheight = math.max(math.min(maxheight,totalheight+45,love.graphics.getHeight()),minheight)
 
 	local window = debugUI.loveframes.Create("frame")
 	if wname then window:SetName(wname) end
-	window:SetPos(debugUI.windowPosition,0)
+	window:SetPos(debugUI.windowPosition,minimized and love.graphics.getHeight()-20 or 0)
 	window:SetSize(165,maxheight)
 	window.xpos = debugUI.windowPosition
 	debugUI.windowPosition = debugUI.windowPosition + 165

@@ -9,8 +9,6 @@ function love.load()
 	-- Create debugUI windows
 	ui = debugUI.new(
 	{
-		name = "Options",
-		maxheight = 300,
 		{	name = "sliders",
 			{var = "test6", name = "print text", type = "checkbox"},
 			{tooltip = "slider tooltip", var = "test1", type = "slider", min = 0, max = 9999.99},
@@ -39,12 +37,15 @@ function love.load()
 			{var = "string2", type = "string", val = "a", editable = false}
 		}
 	
-	})
+	},
+	{maxheight=300})
 	b = debugUI.new({var = "col", name = "background color", type="color", tooltip = 
 [[really long color tooltip that I am cutting
 up into three lines to avoid it going out of
-the screen or being uncomfortable to read]]})
+the screen or being uncomfortable to read]]},
+	                {name = "Single Option",minimized = true})
 	col[2] = 100
+	debugUI.new({var = "whatever",name = "whatever", type="checkbox"},{minheight=0})
 
 	debugUI.hookCallbacks()
 
