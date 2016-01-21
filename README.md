@@ -148,7 +148,7 @@ For use with an angle in radians from 0 to 2*pi
 	tooltip: string to display when hovering over the module instance
 		defaults to no tooltip
 
-### angle
+### vector
 For use with 2d vectors in 
 ##### inputs
 	*var: name of the variable
