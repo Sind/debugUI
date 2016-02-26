@@ -14,6 +14,7 @@ Usage
 To use debugUI, make sure you have the following calls:
 
 either
+
 	function love.load()
 		require "[path to debugUI folder]"
 	end
@@ -38,7 +39,9 @@ either
 	function love.textinput(text)
 		debugUI.textinput(text)
 	end
+
 or
+
 	function love.load()
 		require "[path to debugUI folder]"
 		debugUI.hookCallbacks
@@ -57,21 +60,25 @@ Options table
 -------------
 Here is a list of all options:
 
-####name:
-Name of the window
-	defaults to "Options"
+#### name:
 
-####minheight:
-Minimum height of the window
-	defaults to '0'
+    Name of the window
+    	defaults to "Options"
 
-####maxheight
-Maximum height of the window
-	defaults to '400'
+#### minheight:
 
-###minimized
-If the window should start of minimized
-	defaults to 'false'
+    Minimum height of the window
+    	defaults to '100'
+
+#### maxheight
+
+    Maximum height of the window
+    	defaults to '400'
+
+#### minimized
+
+    If the window should start of minimized
+    	defaults to 'false'
 
 Modules
 -------
