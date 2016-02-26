@@ -55,6 +55,7 @@ then, create debugUI windows using
 
 Instances table
 ---------------
+*instructions on this soon. For now, check 'main.lua'*
 
 Options table
 -------------
@@ -170,7 +171,9 @@ For use with 2d vectors in
 
 
 ### New Modules
-You can make new modules yourself. the slider.lua file in the "objects" subfolder explains how modules work.
+You can make new modules yourself.
+
+The slider.lua file in the "objects" subfolder explains how modules work.
 
 Also, feel free to request new modules in the debugUI issue tracker.
 
@@ -181,4 +184,5 @@ Created by Srod Karim
 This library uses the following third party libraries:
 
 Löve Frames by Kenny Shields: https://github.com/KennyShields/LoveFrames
+
 middleclass by kikito: https://github.com/kikito/middleclass
